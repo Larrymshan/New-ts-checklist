@@ -3,7 +3,7 @@ import FullList from '../model/FullList';
 interface DOMElements {
     ul: HTMLUListElement,
     clear(): void,
-    render(list: FullList): void
+    render(fullList: FullList): void
 }
 
 export default class ListTemplate implements DOMElements{

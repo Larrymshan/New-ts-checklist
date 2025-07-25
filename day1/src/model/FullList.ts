@@ -1,11 +1,11 @@
-import listItem from './ListItem';
+import ListItem from './ListItem';
 
 interface List{
-    list: listItem[],
+    list: ListItem[],
     load(): void,
     save(): void,
-    clear(): void,
-    add(item: listItem): void
+    clearList(): void,
+    add(itemObj: ListItem): void
     removeItem(id: string): void;
 }
 
@@ -13,23 +13,23 @@ export default class FullList implements List{
     
     static instance: FullList = new FullList();
 
-    private constructor(private _list: listItem[] = []){}
+    private constructor(private _list: ListItem[] = []){}
 
-    get list(): listItem[] {
+    get list(): ListItem[] {
         return this._list;
     }
 
     load(): void{
         const storedList: string | null = localStorage.get('thisList');
 
-        if(storedList !== 'string'){
+        if(typeof storedList !== 'string'){
             return;
         }
 
         const parsedList: {_id: string, _item: string, _completed: boolean}[] = JSON.parse(storedList);
 
-        parsedList.forEach(item => {
-            const newListItem = new listItem(item._id, item._item, item._completed);
+        parsedList.forEach(itemObj => {
+            const newListItem = new ListItem(itemObj._id, itemObj._item, itemObj._completed);
             FullList.instance.add(newListItem);
         })
 
@@ -39,13 +39,13 @@ export default class FullList implements List{
         localStorage.setItem('thisList', JSON.stringify(this._list));
     }
 
-    clear():void{
+    clearList():void{
         this._list = [];
         this.save();
     }
 
-    add(item: listItem): void{
-        this._list.push(item);
+    add(itemObj: ListItem): void{
+        this._list.push(itemObj);
         this.save();
     }
 

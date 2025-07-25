@@ -1,6 +1,6 @@
 import ListTemplate from "./templates/ListTemplate";
 import FullList from "./model/FullList";
-import listItem from "./model/ListItem";
+import ListItem from "./model/ListItem";
 
 import './css/style.css';
 
@@ -13,12 +13,13 @@ const initApp = (): void => {
     itemEntryForm.addEventListener('submit', (event: SubmitEvent):void =>{
         event.preventDefault();
 
-        const newItemEntry = document.getElementById('newItemEntry') as HTMLInputElement;
-        const newEntryText = newItemEntry.value.trim();
+        const input = document.getElementById('newItem') as HTMLInputElement;
+        const newEntryText = input.value.trim();
         if(!newEntryText.length) return;
 
         const itemId: number = fullList.list.length ? parseInt(fullList.list[fullList.list.length -1].id) + 1:1;
-        const newItem = new listItem(itemId.toString(), newEntryText);
+        
+        const newItem = new ListItem(itemId.toString(), newEntryText);
 
         fullList.add(newItem);
         listTemplate.render(fullList);
@@ -26,7 +27,7 @@ const initApp = (): void => {
 
     const clearItems = document.getElementById('clearItemsButton') as HTMLButtonElement;
     clearItems.addEventListener('click', (): void => {
-        fullList.clear();
+        fullList.clearList();
         listTemplate.clear();
     })
 

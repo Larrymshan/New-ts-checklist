@@ -1,10 +1,10 @@
-export interface ListItem {
+export interface Item {
     id: string,
     item: string,
     completed: boolean,
 }
 
-export default class listItem implements ListItem {
+export default class ListItem implements Item {
 
     constructor(
         private _id: string = '',
